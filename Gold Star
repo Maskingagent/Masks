@@ -1,0 +1,50 @@
+#include <Adafruit_NeoPixel.h>
+//Blue LED = 9
+//white LED = 6
+//Led on top = 10
+//NeoPixel = 8
+#define PIN 8
+
+Adafruit_NeoPixel npxl = Adafruit_NeoPixel(1, PIN, NEO_GRB + NEO_KHZ800);
+
+void setup() {
+  npxl.begin();
+  npxl.show(); // Initialize all pixels to 'off'
+
+
+  pinMode(7, OUTPUT); //onboard Flora
+
+  pinMode(3, OUTPUT); //PWM ports
+  pinMode(6, OUTPUT);
+  pinMode(9, OUTPUT);
+  pinMode(10, OUTPUT);
+
+  digitalWrite(10, LOW);
+  digitalWrite(9, LOW);
+  digitalWrite(6, LOW);
+  digitalWrite(3, LOW);
+
+  digitalWrite(3, HIGH);
+
+  int i;
+}
+void loop()
+{
+
+  digitalWrite (10, HIGH);
+  digitalWrite(6, HIGH);
+  delay(1500);
+  digitalWrite(9, HIGH);
+  delay(1000);
+  digitalWrite(6,LOW);
+  delay(1500);
+  digitalWrite(9, LOW);
+  delay(250);
+;
+  npxl.setPixelColor(0, 0, 0, 255);
+  npxl.show();
+  delay (250);
+  npxl.setPixelColor(0,255, 255, 255);
+  npxl.show();
+
+}
