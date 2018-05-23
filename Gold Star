@@ -40,7 +40,6 @@ void loop()
   delay(1500);
   digitalWrite(9, LOW);
   delay(250);
-;
   npxl.setPixelColor(0, 0, 0, 255);
   npxl.show();
   delay (250);
