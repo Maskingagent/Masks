@@ -1,0 +1,101 @@
+/*
+  Fade
+
+  This example shows how to fade an LED on pin 9 using the analogWrite()
+  function.
+
+  The analogWrite() function uses PWM, so if you want to change the pin you're
+  using, be sure to use another PWM capable pin. On most Arduino, the PWM pins
+  are identified with a "~" sign, like ~3, ~5, ~6, ~9, ~10 and ~11.
+
+  This example code is in the public domain.
+
+  http://www.arduino.cc/en/Tutorial/Fade
+*/
+#include <Adafruit_NeoPixel.h>
+
+#define nppin 8
+
+Adafruit_NeoPixel npxl = Adafruit_NeoPixel(1, nppin, NEO_GRB + NEO_KHZ800);
+
+
+int pin1 = 10; // Top
+int pin2 = 9;  // Middle
+int pin3 = 6;   //Bottom
+int brightness1 = 0;    // how bright the LED is
+int brightness2 = 0;
+int brightness3 = 0;
+
+// the setup routine runs once when you press reset:
+void setup() {
+
+  pinMode(pin1, OUTPUT);
+  pinMode(pin2, OUTPUT);
+  pinMode(pin3, OUTPUT);
+  pinMode(nppin, OUTPUT);
+  npxl.begin();
+  npxl.show(); // Initialize all pixels to 'off'
+
+}
+
+// the loop routine runs over and over again forever:
+
+void loop()
+{
+
+
+  for (int i = 0; i < 512; i++) {
+    // set the brightness of pins:
+    analogWrite(pin1, brightness1);
+    analogWrite(pin2, brightness2);
+    analogWrite(pin3, brightness3);
+
+    // change the brightness for next time through the loop:
+
+    if (i >= 255) {
+      brightness1 = 255;
+      npxl.setPixelColor(0, 0, 255, 0);
+      npxl.show();
+    }
+    else
+    {
+      brightness1 = i;
+    }
+ 
+    if (i <= 128) {
+      brightness2 = 0  ;
+      npxl.setPixelColor(0, 0, 0, 255);
+      npxl.show();
+    }
+    else if (i >= 384) {
+      brightness2 = 255  ;
+      npxl.setPixelColor(0, 255, 0, 0);
+      npxl.show();
+    }
+    else {
+      brightness2 = i - 128;
+    }
+
+    if (i <= 255) {
+      brightness3 = 0  ;
+    }
+    else {
+      brightness3 = i - 255;
+    }
+
+    // wait for 30 milliseconds to see the dimming effect
+    delay(30);
+  }
+  for (int i = 0; i < 15; i++) {
+    analogWrite(pin1, 192);
+     analogWrite(pin2, 0);
+    analogWrite(pin3, 255);
+    delay(125);
+    analogWrite(pin2, 192);
+    analogWrite(pin3, 0);
+    delay(250);
+    analogWrite(pin1, 0);
+    analogWrite(pin3, 255);
+    delay(125);
+  }
+} 
