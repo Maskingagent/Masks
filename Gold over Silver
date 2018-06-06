@@ -1,0 +1,67 @@
+/*
+the programmer is USBtinyISP
+also push reset button
+set programmer back to AVRISP when done
+*/
+
+int pin1 = 0;  //PWM
+int pin2 = 1;  // PWM
+int pin3 = 2;   //NOT PWM
+int brightness1 = 0;    // how bright the LED is
+int brightness2 = 0;
+int brightness3 = 0;
+
+// the setup routine runs once when you press reset:
+void setup() {
+  pinMode(pin1, OUTPUT);
+  pinMode(pin2, OUTPUT);
+  pinMode(pin3, OUTPUT);
+
+}
+
+// the loop routine runs over and over again forever:
+
+void loop()
+{
+
+
+  for (int i = 0; i < 383; i++) {
+    // set the brightness of pins:
+    analogWrite(pin1, brightness1);
+    analogWrite(pin2, brightness2);
+    analogWrite(pin3, brightness3);
+
+    // change the brightness for next time through the loop:
+
+    if (i >= 255) {
+      brightness1 = 255;
+    }
+    else
+    {
+      brightness1 = i;
+    }
+
+    if (i <= 128) {
+      brightness2 = 0  ;
+    }
+    else if (i >= 383) {
+      brightness2 = 255  ;
+    }
+    else {
+      brightness2 = i - 128;
+    }
+ 
+    
+    // wait for 30 milliseconds to see the dimming effect
+    delay(30);
+  }
+ for (int i = 0; i < 25; i++) {
+  analogWrite(pin1, 255);
+  analogWrite(pin2, 0);
+  delay(50);
+  analogWrite(pin2, 255);
+  delay(50);
+  analogWrite(pin1, 0);
+  delay(100);
+ }
+}
